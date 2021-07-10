@@ -1,12 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Morse Code to Words</title>
+  <style>
+    h1 {
+      font-size: 50px;
+    }
+    body {
+      background-color: white;
+    }
+    span {
+      font-size: 20px;
+    }
+    img {
+      width: 150px;
+      height: 150px;
+    }
+    #main { 
+      width: 100%;
+      text-align: center;
+    }
+    #mainDiv {
+      margin: auto;
+      margin-top: 20px;
+    }
+    #result {
+      margin-top: 20px;
+      background-color: yellow;
+      height: 50px;
+      position:relative;
+      bottom: 20px;
+    }
+    #restart {
+      margin-top: 20px;
+      background-color: greenyellow;
+      width: 100px;
+      height: 50px;
+    }
+    #correct {
+      width: 50px;
+      height: 50px;
+      display: none;
+    }
+    #incorrect {
+      width: 50px;
+      height: 50px;
+      display: none;
+    }
+    .boards {
+      border: 2px solid black;
+    }
+    #arrow {
+      width: 75px;
+      height: 75px;
+      margin-bottom: 150px;
+    }
+    .setUpTools {
+      width: 100px;
+      height: 50px;
+    }
+  </style>  
 </head>
-<body>
-  
+<body onload = "start();">
+  <div id="main">
+    <h1>Hear Morse Code</h1>
+    <img id="soundIC" src="sound.png" onclick = "playSounds();">
+    <img id="soundIC" src="restart.png" onclick = "start();">
+    <br>
+    <button class="setUpTools" style = "background-color: yellow;" onclick="board.run();">
+      <p>Run</p>
+    </button>
+    <button class="setUpTools" style = "background-color: red;" onclick="board.clear();">
+      <p>Clear</p>
+    </button>
+
+    <div id="mainDiv">
+      <canvas id="myCanvas" width="300px" height="400px" class="boards"></canvas>
+      <img id="arrow" src="arrow.png"onclick="need_run = 1; board.run();">
+      <canvas id="myCanvasPixel" width="300px" height="400px" class="boards"></canvas>
+      <img id="arrow" src="arrow.png"onclick="need_run = 1; board.run();">
+      <canvas id="compareCanvas" width="300px" height="400px" class="boards"></canvas>
+    </div>
+
+    <img style="margin-top: 40px;width: 150px; height: 50px;" src="submit.jpg" onclick = "checkResult();">
+    <button id="result">
+      <span>result: </span>
+      <span id ="resultPlace">__________</span>
+    </button>
+    <img src="correct.png" id="correct">
+    <img src="incorrect.png" id="incorrect">
+  </div>
+  <script src="board.js"></script>
+  <script src="recognise.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
