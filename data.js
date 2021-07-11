@@ -41,6 +41,7 @@ function Data() {
     '9': '----.'
   }
   this.setUpMorseCode = () => {
+    //create a random number and change it to morse code
     numberText = random(amountNumber);
     morseText = letters[numberText];
     console.log(numberText);

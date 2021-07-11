@@ -31,6 +31,7 @@ var beep = new Audio('beep.mp3');
 var data;
 var numberText = "", morseText = "", wordsData= [], letter = {}, timeouts = [], check = 1;
 
+//set up value of div and button
 var correctIC = document.getElementById('correct');
 var incorrectIC = document.getElementById('incorrect');
 var resultPlace = document.getElementById('resultPlace');
@@ -85,15 +86,19 @@ function deleteCheckIcon (){
 
 function setUpValue() {
   deleteCheckIcon();
+  //reset value of result button
   resultPlace.textContent = "__________";
+
+  //clear all timeOut events
   for (var i = 0; i < timeouts.length; i++) {
     clearTimeout(timeouts[i]);
   }
   timeouts = [];
+
+  //stop the previous sounds  
   beep.pause();
   beep.currentTime = 0;
 
-  //temp
   //set up value of each square of grid
   device = 1;
   need_run = 0;
@@ -162,6 +167,8 @@ function checkClick(feature, e) {
 } 
 
 function checkResult() {
+  deleteCheckIcon();
+  //appear the result and correct or incorrect icon
   resultPlace.textContent = numberText;
   if(bestNumber == numberText) correctIC.style.display = "unset";
   else incorrectIC.style.display = "unset";

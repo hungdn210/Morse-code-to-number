@@ -1,5 +1,5 @@
 function Board() {
- 
+  //clear button
   this.clear = () => {
     ctx.fillStyle = "white";
       ctx.fillRect(0, 0, width_1, height_1);
@@ -10,6 +10,8 @@ function Board() {
         }
       }
   }
+
+  //run button
   this.run = () => {
     corNumber = -1;
       this.updateBoard_2();
