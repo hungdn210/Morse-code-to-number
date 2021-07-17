@@ -4,27 +4,24 @@ const canvasPixel = document.getElementById("myCanvasPixel");
 const ctx1 = canvasPixel.getContext("2d");
 const canvasCompare = document.getElementById("compareCanvas");
 const ctx2 = canvasCompare.getContext("2d");
-const height_1 = canvas.height;
-const width_1 = canvas.width; 
-const height_2 = canvasPixel.height;
-const width_2 = canvasPixel.width;
-const height_3 = canvasCompare.height;
-const width_3 = canvasCompare.width;
-const size_pen = 15; 
-const size_eraser = 20;
-const color_pen = "blue";
-const color_border = "red";
-const rbgColorPen = [0, 0, 255, 255]; // blue 
-const horiSqCnt = 6;
-const vertSqcnt = 8;
-const size_grid = width_2 / horiSqCnt;
-const maxPoint = 3;
-const minPoint = -3;
-const amountNumber = 10;
-const speed = 100;
+const HEIGHT_1 = canvas.height;
+const WIDTH_1 = canvas.width; 
+const HEIGHT_2 = canvasPixel.height;
+const WIDTH_2 = canvasPixel.width;
+const HEIGHT_3 = canvasCompare.height;
+const WIDTH_3 = canvasCompare.width;
+const SIZE_PEN = 15; 
+const COLOR_PEN = "blue";
+const COLOR_BORDER = "red";
+const RBG_COLOR_PEN = [0, 0, 255, 255]; // blue 
+const HORI_SQ_CNT = 6;
+const VERT_SQ_CNT = 8;
+const SIZE_GRID = WIDTH_2 / HORI_SQ_CNT;
+const AMOUNT_NUMBER = 10;
+const SPEED = 100;
 
 var board, recognise;
-var lastMouse = {}, currentMouse = {}, can_draw = 0, device = 0, need_clear = 0, need_run = 0, bestNumber = 0, corNumber = 0;
+var lastMouse = {}, currentMouse = {}, can_draw = 0, device = 0, need_clear = 0, need_run = 0, bestNumber = 0;
 var grid = [], border = {}, numberData = {}, scoreNumbers = [];
 
 var beep = new Audio('beep.mp3');
@@ -36,43 +33,36 @@ var correctIC = document.getElementById('correct');
 var incorrectIC = document.getElementById('incorrect');
 var resultPlace = document.getElementById('resultPlace');
 
+//set up Red border 
+border = {x: {}, y: {}};
+border.x = {min: WIDTH_1, max: 0};
+border.y = {min: HEIGHT_1, max: 0}
+
 function draw() {
   //clear board
   //device = 1 is a pen 
-  if(device) {
-    ctx.beginPath();
-    ctx.lineWidth = size_pen;
-    ctx.strokeStyle = color_pen;
-    ctx.lineCap = 'round';
-    ctx.moveTo(lastMouse.x, lastMouse.y);
-    ctx.lineTo(currentMouse.x, currentMouse.y);
-    ctx.stroke();
-  }
-  //when using eraser
-  else if(!device) {
-    ctx.beginPath();
-    ctx.lineWidth = size_eraser;
-    ctx.strokeStyle = "white";
-    ctx.lineCap = 'round';
-    ctx.moveTo(lastMouse.x, lastMouse.y);
-    ctx.lineTo(currentMouse.x, currentMouse.y);
-    ctx.stroke();
-  }
+  ctx.beginPath();
+  ctx.lineWidth = SIZE_PEN;
+  ctx.strokeStyle = COLOR_PEN;
+  ctx.lineCap = 'round';
+  ctx.moveTo(lastMouse.x, lastMouse.y);
+  ctx.lineTo(currentMouse.x, currentMouse.y);
+  ctx.stroke();
 }
 
 function setUpBoard() {
   //clean 3 boards
   ctx.beginPath();
   ctx.fillStyle = "white";
-  ctx.fillRect(0, 0, width_1, height_1);
+  ctx.fillRect(0, 0, WIDTH_1, HEIGHT_1);
  
   ctx1.beginPath();
   ctx1.fillStyle = "white";
-  ctx1.fillRect(0, 0, width_2, height_2);
+  ctx1.fillRect(0, 0, WIDTH_2, HEIGHT_2);
 
   ctx2.beginPath();
   ctx2.fillStyle = "white";
-  ctx2.fillRect(0, 0, width_3, height_3);
+  ctx2.fillRect(0, 0, WIDTH_3, HEIGHT_3);
 }
 
 function random(x) {
@@ -102,26 +92,20 @@ function setUpValue() {
   //set up value of each square of grid
   device = 1;
   need_run = 0;
-  corNumber = 0;
-  let tempX = size_grid / 2, tempY = size_grid / 2;
-  for(let i = 0; i < horiSqCnt; i++) {
+  let tempX = SIZE_GRID / 2, tempY = SIZE_GRID / 2;
+  for(let i = 0; i < HORI_SQ_CNT; i++) {
     grid[i] = [];
-    for(let j = 0; j < vertSqcnt; j++) {
+    for(let j = 0; j < VERT_SQ_CNT; j++) {
       grid[i][j] = {
         x: tempX,
         y: tempY,
         seen: 0
       }
-      tempY += size_grid;
+      tempY += SIZE_GRID;
     }
-    tempX += size_grid;
-    tempY = size_grid / 2;
+    tempX += SIZE_GRID;
+    tempY = SIZE_GRID / 2;
   }
- 
-  //set up Red border 
-  border = {x: {}, y: {}};
-  border.x = {min: width_1, max: 0};
-  border.y = {min: height_1, max: 0}
 }
 
 function start() {
@@ -194,13 +178,13 @@ function playSounds() {
           beep.play();
         }, timeTaken));
 
-        timeTaken += 3 * speed;
+        timeTaken += 3 * SPEED;
         timeouts.push( setTimeout(() => {
           beep.pause();
           beep.currentTime = 0;
         }, timeTaken));
 
-        timeTaken += 1 * speed;
+        timeTaken += 1 * SPEED;
         break;
 
       //if it is a dot
@@ -210,22 +194,22 @@ function playSounds() {
           beep.play();
         }, timeTaken));
 
-        timeTaken += 1 * speed;
+        timeTaken += 1 * SPEED;
 
         timeouts.push( setTimeout(() => {
           beep.pause();
           beep.currentTime = 0;
         }, timeTaken));
 
-        timeTaken += 1 * speed;
+        timeTaken += 1 * SPEED;
         break;
       
       case " ":
-        timeTaken += 3 * speed;
+        timeTaken += 3 * SPEED;
         break;
 
       case "/":
-        timeTaken += 1 * speed;
+        timeTaken += 1 * SPEED;
         break;
     }
   }
