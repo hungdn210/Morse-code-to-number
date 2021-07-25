@@ -5,12 +5,12 @@ const ctx1 = canvasPixel.getContext("2d");
 const canvasCompare = document.getElementById("compareCanvas");
 const ctx2 = canvasCompare.getContext("2d");
 const HEIGHT_1 = canvas.height;
-const WIDTH_1 = canvas.width; 
+const WIDTH_1 = canvas.width;  
 const HEIGHT_2 = canvasPixel.height;
 const WIDTH_2 = canvasPixel.width;
 const HEIGHT_3 = canvasCompare.height;
 const WIDTH_3 = canvasCompare.width;
-const SIZE_PEN = 15; 
+const SIZE_PEN = 25; 
 const COLOR_PEN = "blue";
 const COLOR_BORDER = "red";
 const RBG_COLOR_PEN = [0, 0, 255, 255]; // blue 
@@ -21,7 +21,7 @@ const AMOUNT_NUMBER = 10;
 const SPEED = 100;
 
 var board, recognise;
-var lastMouse = {}, currentMouse = {}, can_draw = 0, device = 0, need_clear = 0, need_run = 0, bestNumber = 0;
+var lastMouse = {}, currentMouse = {}, can_draw = 0, device = 0, need_clear = 0, need_run = 0, bestNumber = 0, cleared = 0;
 var grid = [], border = {}, numberData = {}, scoreNumbers = [];
 
 var beep = new Audio('beep.mp3');
@@ -75,6 +75,7 @@ function deleteCheckIcon (){
 }
 
 function setUpValue() {
+  cleared = 1;
   deleteCheckIcon();
   //reset value of result button
   resultPlace.textContent = "__________";
